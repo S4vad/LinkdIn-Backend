@@ -54,7 +54,7 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ message: "incorrect password !" });
     }
-
+  
     let token = await genToken(user._id);
     res.cookie("token", token, {
       httpOnly: true,
