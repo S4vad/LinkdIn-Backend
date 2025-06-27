@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema(
         filedOfStudy: { type: String },
       },
     ],
-    location: { type: String },
+    location: { type: String, default:"india" },
     gender: { type: String, enum: ["male", "female", "other"] },
     experience: [
       {
