@@ -5,6 +5,7 @@ import authRouter from "./routes/auth.routes.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
+import postRouter from "./routes/post.routes.js";
 dotenv.config();
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/user",userRouter)
+app.use("/api/post",postRouter)
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
