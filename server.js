@@ -6,6 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
 import postRouter from "./routes/post.routes.js";
+import connectionRouter from "./routes/connection.routes.js";
 dotenv.config();
 
 const app = express();
@@ -16,6 +17,8 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/user",userRouter)
 app.use("/api/post",postRouter)
+app.use("/api/connection",connectionRouter)
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

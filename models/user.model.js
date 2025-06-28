@@ -27,9 +27,9 @@ const userSchema = mongoose.Schema(
         description: { type: String },
       },
     ],
-    connection: [{ type: mongoose.Schema.Types.ObjectId, ref:"User" }],
+    connections: [{ type: mongoose.Schema.Types.ObjectId, ref:"User" }],
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);
