@@ -12,12 +12,12 @@ import {
 
 let connectionRouter = express.Router();
 
-connectionRouter.post("/:id", isAuth, sendConnection);
+connectionRouter.post("/send/:id", isAuth, sendConnection);
 connectionRouter.patch("/:connectionId/accept", isAuth, acceptConnection);
 connectionRouter.patch("/:connectionId/reject", isAuth, rejectConnection);
 connectionRouter.get("/status/:userId", isAuth, getConnectionStatus);
 connectionRouter.delete("/:userId", isAuth, removeConnection);
 connectionRouter.get("/requests", isAuth, getConnectionRequests);
-connectionRouter.get("/connectios",isAuth,getUserConnections)
+connectionRouter.get("/connections",isAuth,getUserConnections)
 
 export default connectionRouter;

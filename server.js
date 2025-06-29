@@ -25,15 +25,17 @@ app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/connection", connectionRouter);
 
-
-io.on("connection",(socket)=>{
-  console.log("socket io server connected on",socket.id)
-
-socket.on("disconnect", () => {
-  console.log("User disconnected", socket.id);
+export const userSocketMap = new Map();
+io.on("connection", (socket) => {
+  console.log("socket io server connected on", socket.id);
+  socket.on("register",(userId)=>{
+    userSocketMap.set(userId,socket.id)
+    console.log(userSocketMap)
+  })
+  socket.on("disconnect", () => {
+    console.log("User disconnected", socket.id);
+  });
 });
-
-})
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
