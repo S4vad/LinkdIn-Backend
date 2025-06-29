@@ -25,6 +25,7 @@ app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/connection", connectionRouter);
 
+
 io.on("connection",(socket)=>{
   console.log("socket io server connected on",socket.id)
 
