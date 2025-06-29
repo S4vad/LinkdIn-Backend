@@ -1,5 +1,6 @@
 import uploadONCloudinary from "../config/cloudinary.js";
 import Post from "../models/post.model.js";
+import { io } from "../server.js";
 
 export const createPost = async (req, res) => {
   try {
@@ -60,6 +61,8 @@ export const like = async (req, res) => {
     }
     await post.save();
 
+    io.emit("likeUpdated",{postId,likes:post.likes})
+
     return res.status(200).json({ data: post, success: true });
   } catch (error) {
     console.error("LIKE ERROR:", error);
@@ -81,6 +84,8 @@ export const comment = async (req, res) => {
     if (!post) {
       return res.status(400).json({ message: "The post not found !" });
     }
+
+    io.emit("commentUpdated",{postId,comments:post.comments})
 
     return res.status(200).json({ data: post, success: true });
   } catch (error) {
