@@ -35,7 +35,7 @@ export const createPost = async (req, res) => {
 export const getPost = async (req, res) => {
   try {
     const data = await Post.find()
-      .populate("author", "firstName lastName profileImage headline")
+      .populate("author", "firstName lastName profileImage headline userName")
       .populate("comments.user", "firstName lastName profileImage headline")
       .sort({ createdAt: -1 });
     if (data) {

@@ -15,10 +15,10 @@ const userSchema = mongoose.Schema(
       {
         collage: { type: String },
         degree: { type: String },
-        filedOfStudy: { type: String },
+        fieldOfStudy: { type: String },
       },
     ],
-    location: { type: String, default:"india" },
+    location: { type: String, default: "india" },
     gender: { type: String, enum: ["male", "female", "other"] },
     experience: [
       {
@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema(
         description: { type: String },
       },
     ],
-    connections: [{ type: mongoose.Schema.Types.ObjectId, ref:"User" }],
+    connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );
