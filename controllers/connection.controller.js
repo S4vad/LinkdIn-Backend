@@ -3,6 +3,7 @@ import Connection from "../models/connection.model.js";
 import { io } from "../server.js";
 
 import { userSocketMap } from "../server.js";
+import Notification from "../models/notification.model.js";
 
 export const sendConnection = async (req, res) => {
   try {
@@ -73,6 +74,11 @@ export const acceptConnection = async (req, res) => {
     }
 
     connection.status = "accepted";
+    let notification = await Notification.create({
+      receiver: connection.sender,
+      type: "connectionAccepted",
+      relatedUser: senderId,
+    });
     await connection.save();
 
     await User.findByIdAndUpdate(senderId, {

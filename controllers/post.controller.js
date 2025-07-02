@@ -1,4 +1,5 @@
 import uploadONCloudinary from "../config/cloudinary.js";
+import Notification from "../models/notification.model.js";
 import Post from "../models/post.model.js";
 import { io } from "../server.js";
 
@@ -58,10 +59,18 @@ export const like = async (req, res) => {
       post.likes = post.likes.filter((id) => id != userId);
     } else {
       post.likes.push(userId);
+      if (post.author !== userId) {
+        let notification = await Notification.create({
+          receiver: post.author,
+          type: "like",
+          relatedUser: userId,
+          relatedPost: postId,
+        });
+      }
     }
     await post.save();
 
-    io.emit("likeUpdated",{postId,likes:post.likes})
+    io.emit("likeUpdated", { postId, likes: post.likes });
 
     return res.status(200).json({ data: post, success: true });
   } catch (error) {
@@ -80,12 +89,20 @@ export const comment = async (req, res) => {
       { $push: { comments: { content, user: userId } } },
       { new: true }
     ).populate("comments.user", "firstName lastName profileImage headline");
+    if (post.author != userId) {
+      let notification = await Notification.create({
+        receiver: post.author,
+        type: "comment",
+        relatedUser: userId,
+        relatedPost: postId,
+      });
+    }
 
     if (!post) {
       return res.status(400).json({ message: "The post not found !" });
     }
 
-    io.emit("commentUpdated",{postId,comments:post.comments})
+    io.emit("commentUpdated", { postId, comments: post.comments });
 
     return res.status(200).json({ data: post, success: true });
   } catch (error) {
