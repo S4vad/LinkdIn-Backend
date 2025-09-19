@@ -15,10 +15,10 @@ dotenv.config();
 const app = express();
 const server = createServer(app);
 export const io = new Server(server, {
-  cors: { origin: "http://localhost:5173", credentials: true },
+  cors: { origin: process.env.FRONT_URL, credentials: true },
 });
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin:  process.env.FRONT_URL, credentials: true }));
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
